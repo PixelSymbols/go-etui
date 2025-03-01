@@ -16,7 +16,7 @@ func (c *ItemContainer) AddItem(item IItem) {
 	c.items = append(c.items, item)
 }
 
-func (i *ItemContainer) GetItems() []IItem {
+func (i ItemContainer) GetItems() []IItem {
 	return i.items
 }
 

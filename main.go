@@ -16,16 +16,19 @@ type (
 	}
 )
 
-func NewPage() *Page {
+func newPage() *Page {
 	page := components.NewPage(core.NewItemContainer())
 	return &Page{
 		Text: *components.NewText(page),
 	}
 }
+func NewPage() IPage {
+	return newPage()
+}
 
 type (
 	TUI struct {
-		Page
+		*Page
 		components.Pager
 	}
 	ITUI interface {
@@ -35,12 +38,20 @@ type (
 )
 
 func NewTUI() ITUI {
+	container := core.NewItemContainer()
+	page := newPage()
+	pager := components.NewPager(container)
+	pager.AddPage(page)
 	return &TUI{
-		Page: *NewPage(),
+		Page:  page,
+		Pager: *pager,
 	}
 }
 
 func main() {
 	tui := NewTUI()
 	tui.AddText("hello world")
+	page := NewPage()
+	page.AddText("second page")
+	tui.AddPage(page)
 }
